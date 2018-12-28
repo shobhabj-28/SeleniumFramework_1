@@ -1,0 +1,87 @@
+@Test(priority = 9, testName = "DbDeleteValidationInCatalogTab")
+	public void TestCase9() throws IOException, InterruptedException, SQLException {
+	  try {
+		String url = data.get("url");
+		String userName = data.get("user");
+		String passWord = data.get("password");
+		String expectedDeletemsg = data.get("deletedtabmsg");
+		String pageSource = driver.getPageSource();
+		String tabName= data.get("tabname");
+		
+		driver.get(url);
+		
+		/*LoginPage login = new LoginPage(driver, wait); // Login to Admin Page
+		login.enterEmailId(userName);
+		login.enterPassWord(passWord);
+		login.clickOnLogin();
+
+		AdminPage admin = new AdminPage(driver, wait); // To Select System Tab
+		admin.clickOnCatalog(); //To select Catalog
+		admin.clickOnTabs(); //To select Tabs
+		admin.clickOnTabAction(); //To click on Action button
+		admin.clickOnTabDelete(); //To click on Delete
+		admin.clickOnDeleteIt(); //To delete a selected Tab
+	
+		Thread.sleep(10000); 
+		
+		//To Verify the deleted tab under the tab list
+		Assert.assertTrue(pageSource.contains(expectedDeletemsg));	
+		Reporter.log("Assertion on Deleted Tab not present in Tab List");
+		System.out.println("message: You have successfully deleted data!");*/
+		
+		//To validate Deleted Tab is not present on Database 
+		
+		String expectedTabName= tabName;
+	    String actualTabName =  DBUtil.singleDataQuery("SELECT * FROM as_tabs where name='Tab_To_delete' ");
+	   	//Assert.assertTrue(actualTabName.contains(expectedTabName),"Assertion on Deleted Tab");
+	   	Assert.assertTrue(actualTabName.contains(expectedTabName));
+	    Reporter.log("Assertion on Deleted Tab not present in Database");
+	    System.out.println("Tab Name = Tab_To_delete is not available");
+	   	//System.out.println("Tab Name = Tab_To_delete is available");
+	    
+	    
+	  } catch (Exception e) { // TODO: handle exception
+		  System.out.println(e.getMessage());
+		  Reporter.log("Negataive Credentials Failed"); //screenshot 
+		  TakesScreenshot ts=(TakesScreenshot) driver; 
+		  File file= ts.getScreenshotAs(OutputType.FILE);
+		  Date date =new Date(); String currentDate=date.toString().replace(":", "-");
+		  FileUtils.copyFile(file, new
+		  File("./screenshots/Error_"+currentDate+".png"));
+		  
+		  Assert.fail(); 
+		  } 
+
+	  
+	    	}
+	
+    @Test(priority=10, testName= "DbValidationToDeleteCustomer")
+    public void Testcase10() throws IOException, InterruptedException, SQLException {
+             try {
+                             	           	 
+            	//To validate Presence of a Customer Record on Database 
+            	/*String expectedCustomerName= "shobha";
+         	    String actualCustomerName =  DBUtil.singleDataQuery("SELECT * FROM as_customer WHERE name='shobha' ");
+         	    if(expectedTabName==actualTabname) {
+         	    Assert.assertEquals(expectedTabName,actualTabname);
+         	    Reporter.log("Assertion on Deleted Tab not present in Database");
+         	    System.out.println("Tab Name = shobha is not available");
+         	    }
+         	    else
+         	    {
+         	    	System.out.println("Tab Name = shobha is available");
+         	    }*/
+            	 
+             } catch (Exception e) { // TODO: handle exception
+   			  System.out.println(e.getMessage());
+   			  Reporter.log("Negataive Credentials Failed"); //screenshot 
+   			  TakesScreenshot ts=(TakesScreenshot) driver; 
+   			  File file= ts.getScreenshotAs(OutputType.FILE);
+   			  Date date =new Date(); String currentDate=date.toString().replace(":", "-");
+   			  FileUtils.copyFile(file, new
+   			  File("./screenshots/Day_10_Test_case_Error_"+currentDate+".jpg"));
+   			  System.out.println(e.getMessage()); 
+   			  Assert.fail(); 
+   			  } 
+
+    }
